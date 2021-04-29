@@ -7,7 +7,7 @@ def prime(num):
         else : pass
     return True
 
-pre_lst = [True] * (123456*2)
+pre_lst = [True] * (123456*2+1)
 for i in range(2,123456 * 2):
     pre_lst[i]=prime(i)
 
