@@ -1,3 +1,8 @@
+'''
+base case : n == 1일때는 더이상 쪼갤수없음. 따라서 값을 대입함.
+make_pattern 함수는 별을 찍는 함수임.
+구역을 9개의 구역으로 나누고. 중앙의 구역을 제외한 구역에 대해서 make_pattern함수를 적용한다.
+'''
 def make_pattern(y, x, n, star) -> None:
     if (n == 1):
         star[y][x] = "*"
