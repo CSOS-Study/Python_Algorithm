@@ -1,3 +1,7 @@
+'''
+base case : 0 0 0 인경우.
+정렬후 가장 긴 변 ^2 = 나머지 각 변 **2 의합
+'''
 while True:
     triangle_sides = list(map(int,input().split()))
     if not triangle_sides[0] and not triangle_sides[1] and not triangle_sides[2]:
