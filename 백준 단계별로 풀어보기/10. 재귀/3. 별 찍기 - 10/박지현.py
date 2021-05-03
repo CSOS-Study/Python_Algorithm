@@ -6,7 +6,7 @@
 공백을 제외한 영역은 n=3 별 배열의 3배수로 진열됨.
 '''
 
-def stars(n): # 3이 들어왔을 때
+def make_star_lst(n): # 3이 들어왔을 때
     matrix = []
     for i in range(3 * len(n)):
         if i // len(n) == 1:
@@ -16,14 +16,11 @@ def stars(n): # 3이 들어왔을 때
     return matrix
 
 star = ["***", "* *", "***"]
-n = int(input())
-k = 0
+n,k = int(input()), 0
+
 while n != 3:
     n = int(n / 3)
     k += 1
 
-for i in range(k):
-    star = stars(star)
-
-for i in star:
-    print(i)
+for i in range(k): star = make_star_lst(star)
+for i in star: print(i)
