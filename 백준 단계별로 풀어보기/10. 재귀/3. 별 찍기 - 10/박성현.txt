@@ -1,0 +1,19 @@
+def sol(v):
+    lst = []
+    for i in range(3*len(v)):
+        if i//len(v) == 1:
+            lst.append(v[i%len(v)]+" "*len(v)+v[i%len(v)])
+        else:
+            lst.append(v[i%len(v)]*3)
+    return lst
+
+v = ['***','* *','***']
+n, k = int(input()), 0
+while n!=3:
+    n//=3
+    k+=1
+    
+for _ in range(k):
+    v = sol(v)
+for i in v:
+    print(i)
