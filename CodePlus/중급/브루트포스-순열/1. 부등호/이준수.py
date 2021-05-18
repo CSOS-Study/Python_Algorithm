@@ -10,7 +10,6 @@ for i in permutations(number, N+1):
     for idx in range(1,N+1):
         if sign[idx-1] == '<' and i[idx-1] > i[idx]:
             break
-
         if sign[idx-1] == '>' and i[idx-1] < i[idx]:
             break
     else:
