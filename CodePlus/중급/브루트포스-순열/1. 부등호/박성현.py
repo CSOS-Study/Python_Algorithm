@@ -1,33 +1,22 @@
-n = int(input())
-ine_sing = list(map(str,input().split()))
+from itertools import permutations
+import sys
 
-visited = [False]*10
-max_ans =""
-min_ans =""
+def sol(perm):
+    for i in perm:
+        chk=True
+        for j in range(k):
+            if A[j] == '<' and i[j] >= i[j + 1]:
+                chk&=False
+                break
+            if A[j] == '>' and i[j] <= i[j + 1]:
+                chk&=False
+                break
+        if chk:
+            return print(''.join(list(map(str, i))))
 
-def check(i,j,k):
-    if k=='<':
-        return i<j
-    else:
-        return i>j
-
-def solve(idx,s):
-    global max_ans,min_ans
-
-    if(idx==n+1):
-        if(len(min_ans)==0):
-            min_ans = s
-        else:
-            max_ans = s
-        return
-    for i in range(10):
-        if not visited[i]:
-            if(idx==0 or check(s[-1],str(i),ine_sing[idx-1])):
-                visited[i]=True
-                solve(idx+1,s+str(i))
-                visited[i]=False
-
-
-solve(0,"")
-print(max_ans)
-print(min_ans)
+print(permutations([0,1,2,3,4,5,6,7,8,9], 6+1))
+k=int(sys.stdin.readline())
+A=sys.stdin.readline().split()
+perm=list(permutations([0,1,2,3,4,5,6,7,8,9], k+1))
+sol(reversed(perm))
+sol(perm)
