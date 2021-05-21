@@ -34,3 +34,4 @@ def dfs(cnt, res):
 
 dfs(1, case[0])
 print(max_res, min_res, sep='\n')
+
