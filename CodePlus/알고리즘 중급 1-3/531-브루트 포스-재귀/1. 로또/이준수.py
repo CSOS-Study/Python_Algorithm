@@ -22,9 +22,11 @@ def print_case(idx:int, case:list, german_lotto:list):
 
 
 while True:
-    N, *german_lotto = list(map(int,input().split()))
+    N, *german_lotto = list(map(int, input().split()))
     if N == 0:
         break
 
+    #case : 예시
+    #0번공을 뽑는 경우의 수와 0번공을 뽑지 않는 경우의 수를 출력한다.
     print_case(0, [], german_lotto)
     print()
