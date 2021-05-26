@@ -16,7 +16,7 @@ for idx, num in enumerate(nums):
     res += num * (9-idx)
 
 print(res)
-#dict.update()
+
 #string배열을 set으로 하는 방법
 #dict value를 기준으로 정렬
 #가중치

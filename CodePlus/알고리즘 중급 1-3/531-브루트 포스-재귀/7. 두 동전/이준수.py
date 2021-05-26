@@ -11,6 +11,7 @@ for y in range(N):
         if board[y][x] == 'o':
             coins.append((y, x))
 # ((3, 0), (4, 0))
+
 def bfs(coins):
     discovered = set()
     discovered.add(coins)
@@ -39,7 +40,7 @@ def bfs(coins):
                 #동전 1이 #인경우
                 #버튼 조작을 취소한다.
                 elif board[new_coin1[0]][new_coin1[1]] == '#':
-                    new_coin1 = (coin1[0], coin1[1])
+                    new_coin1 = coin1
 
                 #동전 2가 떨어진경우
                 if not(0 <= new_coin2[0] < N and 0 <= new_coin2[1] < M):
@@ -48,7 +49,7 @@ def bfs(coins):
                 # 동전 2이 #인경우
                 # 버튼 조작을 취소한다.
                 elif board[new_coin2[0]][new_coin2[1]] == '#':
-                    new_coin2 = (coin2[0], coin2[1])
+                    new_coin2 = coin2
                 ###############위치 조정 종료###############
                 ###############모든 조작이 완료된 상태###############
 
