@@ -28,10 +28,10 @@
 6543
 '''
 N = int(input())
-col = set()
+col = set() #세로
 #row = set()
-ldiag = set()
-rdiag = set()
+ldiag = set() #왼대각선
+rdiag = set() #오른대각선
 
 def dfs(y:int)->int:
     if y == N:

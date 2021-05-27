@@ -4,6 +4,7 @@ import sys
 N = int(input())
 board = [list(map(int, input().split())) for _ in range(N)]
 all_team = list(combinations(range(N), N//2))
+print(all_team)
 start_team = all_team[:len(all_team)//2:]
 link_team = all_team[-1:len(all_team)//2-1:-1]
 
