@@ -63,9 +63,6 @@ def dfs(zero_list, board):
             row_check[ny].remove(N)
 
 
-
-
-#board = [sys.stdin.readline().rstrip().split() for _ in range(9)]
 #입력 받는법?
 board = [[int(x) for x in sys.stdin.readline().split()] for _ in range(9)]
 zero_list = [(y, x) for x in range(len(board[0])) for y in range(len(board)) if board[y][x] == 0]

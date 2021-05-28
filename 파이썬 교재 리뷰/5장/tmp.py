@@ -1,1 +1,6 @@
-print((0,0) <= (1,5) < (4,4))
+from itertools import combinations
+
+dominos = set()
+for n1, n2 in combinations(range(1, 10),2):
+    print(n1, n2)
+    dominos.add((n1, n2))

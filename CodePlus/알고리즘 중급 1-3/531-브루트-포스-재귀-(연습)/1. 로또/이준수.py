@@ -12,9 +12,11 @@ while True:
 '''
 #idx를 뽑아 case인 경우(길이가 6인경우) 출력한다.
 def print_case(idx:int, case:list, german_lotto:list):
+    if len(case) == 6:
+        print(*case)
+        return
+
     if idx == len(german_lotto):
-        if len(case) == 6:
-            print(*case)
         return
 
     print_case(idx+1, case+[german_lotto[idx]], german_lotto)
