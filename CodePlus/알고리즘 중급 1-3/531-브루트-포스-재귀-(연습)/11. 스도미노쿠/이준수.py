@@ -37,62 +37,62 @@ def make_init_board():
     return board
 
 def brute_force(board):
-    if len(dominos) == 0:
-        print(board)
+    if len(zero_check) == 0:
+        #print(board)
         return True
 
     #유효한 위치에서 하나를 뽑음
-    y, x = list(zero_check)[0]
-    #또다른 유효한 위치를 찾는 상태
-    for dy, dx in (0,-1), (0,+1), (+1,0), (-1,0):
-        ny = y + dy
-        nx = x + dx
-        if (ny,nx) in zero_check:
-            #y, x, ny, nx 모두 유효한 위치임.
-            #해당위치에 어떤 숫자가 맞는지 판단할꺼임.
-            #y,x에 맞는 숫자. (들어가도 되는 숫자)
-            valid_num1 = col_check[x] & row_check[y] & box_check[(y // 3) * 3 + x // 3]
-            #ny,nx에 맞는 숫자. (들어가도 되는 숫자)
-            valid_num2 = col_check[nx] & row_check[ny] & box_check[(ny // 3) * 3 + nx // 3]
-            #도미노로서의 결합
-            for num1 in valid_num1:
-                for num2 in valid_num2 & dominos[num1]:
-                    #같으면 안되고 사용했던 도미노여도 안됨
-                    #도미노에는 사용가능한 도미노들이 들어있음
-                    board[y][x] = num1
-                    col_check[x].remove(num1)
-                    row_check[y].remove(num1)
-                    box_check[(y // 3) * 3 + x // 3].remove(num1)
+    for y, x in zero_check:
+        #또다른 유효한 위치를 찾는 상태
+        for dy, dx in (0, +1), (+1, 0):
+            ny = y + dy
+            nx = x + dx
+            if (ny,nx) in zero_check:
+                #y, x, ny, nx 모두 유효한 위치임.
+                #해당위치에 어떤 숫자가 맞는지 판단할꺼임.
+                #y,x에 맞는 숫자. (들어가도 되는 숫자)
+                valid_num1 = col_check[x] & row_check[y] & box_check[(y // 3) * 3 + x // 3]
+                #ny,nx에 맞는 숫자. (들어가도 되는 숫자)
+                valid_num2 = col_check[nx] & row_check[ny] & box_check[(ny // 3) * 3 + nx // 3]
+                #도미노로서의 결합
+                for num1 in valid_num1:
+                    for num2 in valid_num2 & dominos[num1]:
+                        #같으면 안되고 사용했던 도미노여도 안됨
+                        #도미노에는 사용가능한 도미노들이 들어있음
+                        board[y][x] = num1
+                        col_check[x].remove(num1)
+                        row_check[y].remove(num1)
+                        box_check[(y // 3) * 3 + x // 3].remove(num1)
 
-                    board[ny][nx] = num2
-                    col_check[nx].remove(num2)
-                    row_check[ny].remove(num2)
-                    box_check[(ny // 3) * 3 + nx // 3].remove(num2)
+                        board[ny][nx] = num2
+                        col_check[nx].remove(num2)
+                        row_check[ny].remove(num2)
+                        box_check[(ny // 3) * 3 + nx // 3].remove(num2)
 
-                    dominos[num1].remove(num2)
-                    dominos[num2].remove(num1)
+                        dominos[num1].remove(num2)
+                        dominos[num2].remove(num1)
 
-                    zero_check.remove((y,x))
-                    zero_check.remove((ny,nx))
+                        zero_check.remove((y,x))
+                        zero_check.remove((ny,nx))
 
-                    if brute_force(board):
-                        return True
+                        if brute_force(board):
+                            return True
 
-                    board[y][x] = 0
-                    col_check[x].add(num1)
-                    row_check[y].add(num1)
-                    box_check[(y // 3) * 3 + x // 3].add(num1)
+                        board[y][x] = 0
+                        col_check[x].add(num1)
+                        row_check[y].add(num1)
+                        box_check[(y // 3) * 3 + x // 3].add(num1)
 
-                    board[ny][nx] = 0
-                    col_check[nx].add(num2)
-                    row_check[ny].add(num2)
-                    box_check[(ny // 3) * 3 + nx // 3].add(num2)
+                        board[ny][nx] = 0
+                        col_check[nx].add(num2)
+                        row_check[ny].add(num2)
+                        box_check[(ny // 3) * 3 + nx // 3].add(num2)
 
-                    dominos[num1].add(num2)
-                    dominos[num2].add(num1)
+                        dominos[num1].add(num2)
+                        dominos[num2].add(num1)
 
-                    zero_check.add((y, x))
-                    zero_check.add((ny, nx))
+                        zero_check.append((y, x))
+                        zero_check.append((ny, nx))
 
     return False
 
@@ -112,12 +112,12 @@ while True:
         dominos[idx+1] = {1, 2, 3, 4, 5, 6, 7, 8, 9}
         dominos[idx+1].remove(idx+1)
 
-    zero_check = set()
+    zero_check = list()
 
     for y in range(len(board)):
         for x in range(len(board[0])):
             if board[y][x] == 0:
-                zero_check.add((y, x))
+                zero_check.append((y, x))
             else:
                 col_check[x].remove(board[y][x])
                 row_check[y].remove(board[y][x])
