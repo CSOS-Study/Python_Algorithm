@@ -40,20 +40,20 @@ for _ in range(N):
     words.append(word)
 
 #학습된 결과이다.
-learn = 0
+learned = 0
 #a,n,t,i,c 을 학습시킨다.
-learn |= 1 << (ord('a')-ord('a'))
-learn |= 1 << (ord('n')-ord('a'))
-learn |= 1 << (ord('t')-ord('a'))
-learn |= 1 << (ord('i')-ord('a'))
-learn |= 1 << (ord('c')-ord('a'))
+learned |= 1 << (ord('a')-ord('a'))
+learned |= 1 << (ord('n')-ord('a'))
+learned |= 1 << (ord('t')-ord('a'))
+learned |= 1 << (ord('i')-ord('a'))
+learned |= 1 << (ord('c')-ord('a'))
 
 if K == 26:#K가 26이라면, 모든 영단어를 다 읽을수있는 것이다.
     print(N)
 elif K < 5:#K가 5미만이라면, 모든 영단어를 다 읽을수없는 것이다.
     print(0)
 else:#이외의 경우 브루트포스를 통해서 결과를 구한다.
-    print(dfs(0, 5, learn))
+    print(dfs(0, 5, learned))
 
 
 #https://ooyoung.tistory.com/104
