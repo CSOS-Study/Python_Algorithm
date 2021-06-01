@@ -1,40 +1,7 @@
 import collections
 import sys
-'''
-#행이 valid한지 판단한다.
-def is_row_valid(y, board):
-    return is_unit_valid(board[y])
 
-
-#열이 valid한지 판단한다.
-def is_col_valid(x, board):
-    return is_unit_valid(list(zip(*board))[x])
-
-
-#box가 valid한지 판단한다.
-def is_box_valid(y, x, board):
-    box_y = y // 3
-    box_x = x // 3
-    box = [board[ny][nx] for nx in range(box_x * 3, box_x * 3 + 3) for ny in range(box_y * 3, box_y * 3 + 3)]
-    return is_unit_valid(box)
-
-
-#unit이 valid한지 판단한다.
-def is_unit_valid(units):
-    check = set()
-    for unit in units:
-        if unit != 0:
-            if unit not in check:
-                check.add(unit)
-            else:
-                return False
-    return True
-
-
-#현재 y,x값이 유효한지 판단한다.
-def is_valid(y, x, board):
-    return is_box_valid(y, x, board) and is_col_valid(x, board) and is_row_valid(y, board)
-'''
+#주어진 board를 프린트합니다.
 def print_board(board):
     for y in range(len(board)):
         for x in range(len(board[0])):
