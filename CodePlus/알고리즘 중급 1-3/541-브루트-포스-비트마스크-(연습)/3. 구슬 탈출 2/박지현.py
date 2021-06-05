@@ -1,6 +1,5 @@
 import collections
 
-
 def move_marble(marble_position, dy, dx):
     y, x = marble_position
     moved_num = 0
@@ -9,7 +8,6 @@ def move_marble(marble_position, dy, dx):
         y += dy
         x += dx
     return y, x, moved_num
-
 
 N, M = map(int, input().split())
 board = [list(input()) for _ in range(N)]
