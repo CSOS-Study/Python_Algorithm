@@ -27,7 +27,7 @@
 #             if j == "-":
 #                 cal_pattern = re.compile("[0-9]+-[0-9]+")
 #             else:
-#                 cal_pattern = re.compile(f"[0-9]+[{{{j}}}][0-9]+")
+#                 cal_pattern = re.compile(f"[0-9]+[{j}][0-9]+")
 #             target_exe = cal_pattern.findall(temp)
 #             for k in target_exe:
 #                 temp = temp.replace(k, str(eval(k)))
@@ -42,27 +42,24 @@
 #
 #
 # solution("100-200*300-500+20")
-#
 
 
-from itertools import permutations
-def calc(priority, n, expression):
-    if n == 2:
-        return str(eval(expression))
-    if priority[n] == '*':
-        res = eval('*'.join([calc(priority, n + 1, e) for e in expression.split('*')]))
-    if priority[n] == '+':
-        res = eval('+'.join([calc(priority, n + 1, e) for e in expression.split('+')]))
-    if priority[n] == '-':
-        res = eval('-'.join([calc(priority, n + 1, e) for e in expression.split('-')]))
-    return str(res)
-
+import re
 
 def solution(expression):
     answer = 0
-    priorities = (list(permutations(['*','-','+'], 3)))
-    for priority in priorities:
-        res = int(calc(priority, 0, expression))
-        answer = max(answer, abs(res))
-
+    oper = ["+-*", "+*-", "-*+", "-+*", "*+-", "*-+"]
+    for i in range(6):
+        check = re.findall("[+*-]+", expression)
+        numbers = re.findall("[0-9]+", expression)
+        for j in range(3):
+            k = 0
+            while k < len(check):
+                if check[k] == oper[i][j]:
+                    numbers[k] = str(eval(numbers[k] + check[k] + numbers[k + 1]))
+                    del check[k]
+                    del numbers[k + 1]
+                else:
+                    k += 1
+        answer = max(answer, abs(int(numbers[0])))
     return answer
