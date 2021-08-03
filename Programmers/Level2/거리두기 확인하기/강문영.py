@@ -1,104 +1,70 @@
-#
-#
-# def cofirm_distance(waiting_room, visited):
-#     schedule_visited_1 = [[-1, 0], [-1, 0], [1, 0], [0, 1]]  ##방문 대상 점들
-#      # 방문 대상 점은 -> P인 점을 찾아서 그 주위에 해당 로직을 만족하는지의 여부를 찾기
-#     for i in range(5):
-#         for j in range(5):
-#             for k in schedule_visited_1:
-#                 if (i + k[0], j + k[1]) in visited:
-#                     if (k[0]**2+ k[1]**2) == 1 and (
-#                     waiting_room[i][j], waiting_room[i + k[0]][j + k[1]] == "P", "P") or (
-#                             waiting_room[i][j], waiting_room[i + k[0]][j + k[1]] == "P", "O"): return 0
-#
-#
-#
-# def solution(places):
-#     visited = []
-#     answer = []
-#     for i in range(5):
-#         for j in range(5):
-#             visited.append((i, j))
-#
-#     for place in places:
-#         waiting_room = []
-#         for i in place:
-#             temp = []
-#             for j in i:
-#                 temp.append(j)
-#             waiting_room.append(temp)
-#         answer.append(cofirm_distance(waiting_room, visited))
-#
-#     print(answer)
-#
-# solution([["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"], ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"], ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"], ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"], ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"]])
-
-
 from collections import deque
 
-d = ((0, 1), (1, 0), (-1, 0), (0, -1))
-SIZE = 5
+
+def extract_place_and_p(place):
+    total_place = []
+    p_place = []
+    for i_idx, i in enumerate(place):
+        temp = list(i)
+        for j_idx, j in enumerate(i):
+            if j == "P":
+                p_place.append((i_idx, j_idx))
+        total_place.append(temp)
+
+    return total_place, p_place
 
 
-def make_maps(place):
-    arr = []
-    men = []
-    for i, string in enumerate(place):
-        for j, ch in enumerate(string):
-            if ch == 'P': men.append((i, j))
-
-        arr.append(list(string))
-
-    return arr, men
-
-
-def isin(y, x):
-    if -1 < y < SIZE and -1 < x < SIZE: return True
+def is_valid_point(x, y):
+    if -1 < x < 5 and -1 < y < 5:
+        return True
     return False
 
 
-def bfs(arr, sy, sx):
-    q = deque()
-    q.append((sy, sx))
-    table = [[-1 for _ in range(SIZE)] for _ in range(SIZE)]
-    table[sy][sx] = 0
+compare_point = [(-1, 0), (0, -1), (0, 1), (1, 0)]
 
-    while q:
-        y, x = q.popleft()
 
-        for dy, dx in d:
-            ny = y + dy
-            nx = x + dx
+def bfs(total_distance_table, x, y):
+    deque_test = deque()
+    deque_test.append((x, y))
+    distacne_table_point = [[-1 for _ in range(5)] for _ in range(5)]
+    distacne_table_point[x][y] = 0
 
-            if not isin(ny, nx): continue
-            if arr[ny][nx] != 'X' and table[ny][nx] == -1:
-                table[ny][nx] = table[y][x] + 1
-                q.append((ny, nx))
+    while deque_test:
+        know_point = deque_test.popleft()
 
-    return table
+        for dx, dy in compare_point:
+            cpr_x = know_point[0] + dx
+            cpr_y = know_point[1] + dy
+
+            if is_valid_point(cpr_x, cpr_y):
+                if distacne_table_point[cpr_x][cpr_y] == -1 and total_distance_table[cpr_x][cpr_y] != "X":
+                    distacne_table_point[cpr_x][cpr_y] = distacne_table_point[know_point[0]][know_point[1]] + 1
+                    deque_test.append((cpr_x, cpr_y))
+
+    return distacne_table_point
 
 
 def solution(places):
-    answer = []
-    for place in places:
-        arr, men = make_maps(place)
-        ok = True
-
-        for man in men:
-            table = bfs(arr, man[0], man[1])
-            for other_man in men:
-                if man != other_man:
-                    y = other_man[0]
-                    x = other_man[1]
-                    if -1 < table[y][x] <= 2:
-                        ok = False
+    result = []
+    for place in places: # 대기실 하나씩 확인
+        target_table, p_place = extract_place_and_p(place) # 대기실 인원 배치 명단과 인터뷰 대상자가 앉아있는 포인트
+        is_pass = True
+        for point in p_place:  # P 포인트 점을 하나씩 꺼내서 테이블을 만들기
+            compare_table = bfs(target_table, point[0], point[1])
+            for diff_point in p_place:
+                if point != diff_point:
+                    if -1 < compare_table[diff_point[0]][diff_point[1]] <= 2:
+                        is_pass = False
                         break
 
-            if not ok: break
+            if not is_pass:
+                break
 
-        if ok:
-            answer.append(1)
+        if not is_pass:
+            result.append(0)
         else:
-            answer.append(0)
+            result.append(1)
 
-    return answer
+    return result
+
+
