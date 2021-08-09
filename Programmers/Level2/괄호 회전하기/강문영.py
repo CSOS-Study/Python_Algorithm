@@ -41,12 +41,6 @@ def solution(s):
         u = s[:i]
         v = s[i:]
 
-        # first_result = confirm_alright(re.findall("{|}", v + u))
-        # second_result = confirm_alright(re.findall("\[|\]", v + u))
-        # third_result = confirm_alright(re.findall("\(|\)", v + u))
-        #
-        # if first_result and second_result and third_result:
-        #     cnt += 1
         if check(v+u):
             cnt +=1
     return cnt
