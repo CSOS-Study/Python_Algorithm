@@ -31,3 +31,25 @@
 #                 max = n * n
 #     return max
 # 틀린 답변, 내일 고민하자
+
+def solution(board):
+    n = len(board)
+    m = len(board[0])
+
+    memo = [[0] * m for _ in range(n)]
+    memo[0] = board[0]
+
+    for i in range(1, n):
+        memo[i][0] = board[i][0]
+
+    for x in range(1, n):
+        for y in range(1, m):
+            if board[x][y] == 1:
+                memo[x][y] = min(memo[x - 1][y - 1], memo[x - 1][y], memo[x][y - 1]) + 1
+
+    answer = 0
+    for temp in range(n):
+        maxval = max(memo[temp])
+        answer = max(answer, maxval)
+
+    return answer * answer
